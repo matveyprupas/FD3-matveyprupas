@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter</title>
+</head>
+<body>
+    <div class="container"></div>
+
+
+    <script src="https://unpkg.com/react@15/dist/react.js"></script> 
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+        
+    <script src="./filter.js"></script>
+    <link rel="stylesheet" type="text/css" href="./filter.css" />
+  
+    <script>
+        let arrayOfString = [
+            "sdfsasdgsdgsadf",
+            "строка номер 17",
+            "ничего я не хочу",
+            "Ехал Грека через реку",
+            "видит Грека в реке рак",
+            "сунул грека руку в реку",
+            "рак за руку Греку цап",
+            "иду - темно",
+            "гляжу - пятно",
+            "цап-цап - цяпло",
+            "нюх-нюх - безответственный владелец собаки",
+        ];
+        
+      ReactDOM.render(
+        React.createElement(Filter,{string:arrayOfString}), 
+        document.querySelector('div.container') 
+      );
+  
+    </script>
+</body>
+</html>
