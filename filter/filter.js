@@ -19,7 +19,7 @@ let Filter = React.createClass({
     },
 
     arrayOfStringChanging: function(findStr) {
-        let strArr = this.state.string.slice();
+        let strArr = this.props.string.slice();
         console.log(findStr);
         this.setState( {string: strArr.filter( str => str.includes(findStr) )} );
     },
