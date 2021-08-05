@@ -13,15 +13,17 @@ let Filter = React.createClass({
                 nonFilteredStr: "", };
     },
 
-    textChanged: function(EO) {
-        // console.log(EO.type); 
-        this.setState( {sortText: EO.target.value}, this.arrayOfStringChanging(EO.target.value) );
+    textChanged: function(EO) { 
+        let sortText = EO ? EO.target.value : this.state.sortText;
+        // console.log(sortText);
+        this.setState( {sortText: sortText}, this.arrayOfStringChanging(sortText) );
         // console.log(this.state);
     },
 
     arrayOfStringChanging: function(findStr) {
         let strArr = this.props.string.slice();
-        // console.log(strArr);
+        // console.log("attrobute:", findStr);
+        // console.log("state:", this.state.sortText);
 
         this.setState( {string: strArr.filter( str => str.includes(findStr) )} );
     },
@@ -37,20 +39,21 @@ let Filter = React.createClass({
             this.setState( {string: sortStrArr, checkbox: true} );
             // console.log(this.props.string);
         } else {
-            this.setState( {string: strArr, checkbox: false} );
+            this.textChanged();
+            this.setState( {checkbox: false}, );
         }
         // this.textChanged(EO);
-    },
-
-    reset: function() {
-        this.setState( {string: this.props.string, checkbox: false, sortText: ""}, this.render );
-        
     },
 
     textareaChanged: function(EO) {
         // console.log(EO.type, EO.target.value);
         this.setState( {string: EO.target.value.split("\n")} );
 
+    },
+
+    reset: function() {
+        this.setState( {string: this.props.string, checkbox: false, sortText: ""}, this.render );
+        
     },
 
     render: function() {
