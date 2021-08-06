@@ -7,14 +7,14 @@ let Filter = React.createClass({
 
     getInitialState: function() {
         return {string: this.props.string,
-                sortText: "",
+                sortText: "", // text for sort textarea
                 reload: false,
                 checkbox: false, 
                 nonFilteredStr: "", };
     },
 
     textChanged: function(EO) { 
-        let sortText = EO ? EO.target.value : this.state.sortText;
+        let sortText = EO ? EO.target.value : this.state.sortText; 
         // console.log(sortText);
         this.setState( {sortText: sortText}, this.arrayOfStringChanging(sortText) );
         // console.log(this.state);
