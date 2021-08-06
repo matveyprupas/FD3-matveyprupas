@@ -7,33 +7,48 @@ let Filter = React.createClass({
 
     getInitialState: function() {
         return {string: this.props.string,
-                sortText: "",
+                sortText: "", // text for sort textarea
                 reload: false,
-                checkbox: false, };
+                checkbox: false, 
+                nonFilteredStr: "", };
     },
 
-    textChanged: function(EO) {
-        // console.log('VotesAnswer: текст свободного ответа изменён - '+EO.target.value); 
-        this.setState( {sortText: EO.target.value}, this.arrayOfStringChanging(EO.target.value) );
+    textChanged: function(EO) { 
+        let sortText = EO ? EO.target.value : this.state.sortText; 
+        // console.log(sortText);
+        this.setState( {sortText: sortText}, this.arrayOfStringChanging(sortText) );
         // console.log(this.state);
     },
 
     arrayOfStringChanging: function(findStr) {
         let strArr = this.props.string.slice();
-        console.log(findStr);
+        // console.log("attrobute:", findStr);
+        // console.log("state:", this.state.sortText);
+
         this.setState( {string: strArr.filter( str => str.includes(findStr) )} );
     },
 
     sortActivated: function(EO) {
         // console.log(this.props.string);
-        let strArr = this.state.string.slice().sort();
+        // let oldStrArr = this.state.string.slice();
+        let strArr = this.state.string.slice();
+        let sortStrArr = strArr.slice().sort();
+        // console.log(strArr);
 
         if(EO.target.checked) {
-            this.setState( {string: strArr, checkbox: true} );
+            this.setState( {string: sortStrArr, checkbox: true} );
             // console.log(this.props.string);
         } else {
-            this.setState( {string: this.props.string, checkbox: false} );
+            this.textChanged();
+            this.setState( {checkbox: false}, );
         }
+        // this.textChanged(EO);
+    },
+
+    textareaChanged: function(EO) {
+        // console.log(EO.type, EO.target.value);
+        this.setState( {string: EO.target.value.split("\n")} );
+
     },
 
     reset: function() {
@@ -49,7 +64,7 @@ let Filter = React.createClass({
                 React.DOM.input( {className: "filter__input", type: "text", onChange: this.textChanged, value: this.state.sortText}),
                 React.DOM.input( {className: "filter__btn", type: "button", value: "Сброс", onClick: this.reset}),
             ),
-            React.DOM.textarea( {className: "filter__textarea", value: this.state.string.join("\n")}),
+            React.DOM.textarea( {className: "filter__textarea", value: this.state.string.join("\n"), onChange: this.textareaChanged, }),
         );
     },
 });
