@@ -7,48 +7,32 @@ let Filter = React.createClass({
 
     getInitialState: function() {
         return {string: this.props.string,
-                sortText: "",
-                reload: false,
-                checkbox: false, 
+                sortText: "", // text for sort textarea
+                checkbox: false, // true - checkbox checked
                 nonFilteredStr: "", };
     },
 
-    textChanged: function(EO) { 
-        let sortText = EO ? EO.target.value : this.state.sortText;
-        // console.log(sortText);
-        this.setState( {sortText: sortText}, this.arrayOfStringChanging(sortText) );
-        // console.log(this.state);
-    },
-
-    arrayOfStringChanging: function(findStr) {
-        let strArr = this.props.string.slice();
-        // console.log("attrobute:", findStr);
-        // console.log("state:", this.state.sortText);
-
-        this.setState( {string: strArr.filter( str => str.includes(findStr) )} );
-    },
-
-    sortActivated: function(EO) {
-        // console.log(this.props.string);
-        // let oldStrArr = this.state.string.slice();
-        let strArr = this.state.string.slice();
-        let sortStrArr = strArr.slice().sort();
-        // console.log(strArr);
-
-        if(EO.target.checked) {
-            this.setState( {string: sortStrArr, checkbox: true} );
-            // console.log(this.props.string);
-        } else {
-            this.textChanged();
-            this.setState( {checkbox: false}, );
-        }
-        // this.textChanged(EO);
+    filterTextUpdate: function(EO) {
+        this.setState( {sortText: EO.target.value}, () => this.textareaUpdate(this.state.sortText, this.state.checkbox));
+    },    
+    
+    checkboxUpdate: function() {
+        this.setState( {checkbox: !this.state.checkbox}, () => this.textareaUpdate(this.state.sortText, this.state.checkbox));
     },
 
     textareaChanged: function(EO) {
-        // console.log(EO.type, EO.target.value);
         this.setState( {string: EO.target.value.split("\n")} );
+    },
 
+    textareaUpdate: function(filterStr, sortCheck) {
+        let strArr = [...this.props.string].filter( str => str.includes(filterStr) );
+
+        if (sortCheck) {
+            strArr = strArr.sort();
+        }
+
+        this.setState( {string: strArr} );
+        console.log(strArr, filterStr, this.state.sortText, sortCheck);
     },
 
     reset: function() {
@@ -60,8 +44,8 @@ let Filter = React.createClass({
         return React.DOM.div( {className:"filter__frame"},
             
             React.DOM.div( {className: "filter__row"},
-                React.DOM.input( {className: "filter__checkbox", type: "checkbox", onChange: this.sortActivated, checked: this.state.checkbox}),
-                React.DOM.input( {className: "filter__input", type: "text", onChange: this.textChanged, value: this.state.sortText}),
+                React.DOM.input( {className: "filter__checkbox", type: "checkbox", onChange: this.checkboxUpdate, checked: this.state.checkbox}),
+                React.DOM.input( {className: "filter__input", type: "text", onChange: this.filterTextUpdate, value: this.state.sortText}),
                 React.DOM.input( {className: "filter__btn", type: "button", value: "Сброс", onClick: this.reset}),
             ),
             React.DOM.textarea( {className: "filter__textarea", value: this.state.string.join("\n"), onChange: this.textareaChanged, }),
