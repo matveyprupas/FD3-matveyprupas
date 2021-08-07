@@ -17,22 +17,18 @@ let Filter = React.createClass({
     },    
     
     checkboxUpdate: function() {
-        this.setState( {checkbox: !this.state.checkbox}, () => this.textareaUpdate(this.state.sortText, this.state.checkbox));
+        this.setState( {checkbox: !this.state.checkbox}, () => this.textareaUpdate());
     },
 
-    textareaChanged: function(EO) {
-        this.setState( {string: EO.target.value.split("\n")} );
-    },
+    textareaUpdate: function() {
+        let strArr = [...this.props.string].filter( str => str.includes(this.state.sortText) );
 
-    textareaUpdate: function(filterStr, sortCheck) {
-        let strArr = [...this.props.string].filter( str => str.includes(filterStr) );
-
-        if (sortCheck) {
+        if (this.state.checkbox) {
             strArr = strArr.sort();
         }
 
         this.setState( {string: strArr} );
-        console.log(strArr, filterStr, this.state.sortText, sortCheck);
+        console.log(strArr, this.state.sortText, this.state.sortText, this.state.checkbox);
     },
 
     reset: function() {
@@ -48,7 +44,7 @@ let Filter = React.createClass({
                 React.DOM.input( {className: "filter__input", type: "text", onChange: this.filterTextUpdate, value: this.state.sortText}),
                 React.DOM.input( {className: "filter__btn", type: "button", value: "Сброс", onClick: this.reset}),
             ),
-            React.DOM.textarea( {className: "filter__textarea", value: this.state.string.join("\n"), onChange: this.textareaChanged, }),
+            React.DOM.textarea( {className: "filter__textarea", value: this.state.string.join("\n"), }),
         );
     },
 });
