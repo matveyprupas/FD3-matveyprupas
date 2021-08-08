@@ -13,7 +13,7 @@ let Filter = React.createClass({
     },
 
     filterTextUpdate: function(EO) {
-        this.setState( {sortText: EO.target.value}, () => this.textareaUpdate(this.state.sortText, this.state.checkbox));
+        this.setState( {sortText: EO.target.value}, () => this.textareaUpdate());
     },    
     
     checkboxUpdate: function() {
