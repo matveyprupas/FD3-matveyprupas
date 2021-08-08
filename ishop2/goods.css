@@ -1,11 +1,3 @@
-.goods__frame {
-  /* background-color: pink; */
-}
-
-.goods__text {
-  /* text-transform: uppercase; */
-}
-
 .good__description {
   display: flex;
   align-items: center;
