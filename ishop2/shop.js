@@ -30,20 +30,21 @@ let Shop2 = React.createClass({
         } else {
             this.setState({[keyGood]: {...this.state[keyGood], className: "good__description"}});
         }
-        // console.log("shop: ");
-        // console.log(obj);
-        // console.log(this.state[keyGood], `good_${obj.code}`);
+    },
+
+    removeGood: function(obj) {
+        let keyGood = `good_${obj.code}`;
+        
+        this.setState({[keyGood]: {...this.state[keyGood], show: false}});
     },
 
     render: function() {
         let goodsArrayDOM = [];
-        // console.log(this.state);
-
 
         for(let key in this.state) {
-            goodsArrayDOM.push( React.createElement(Goods, {...this.state[key], cbChooseGood: this.chooseGood, key: this.state[key].code}) );
+            if(!this.state[key].show) continue;
+            goodsArrayDOM.push( React.createElement(Goods, {...this.state[key], cbChooseGood: this.chooseGood, cbRemoveGood: this.removeGood, key: this.state[key].code}) );
         }
-        // console.log(goodsArrayDOM);
 
         return React.DOM.div( {className: "goods__frame"},
             React.DOM.h1( {className: "goods__title"}, this.props.shopName ),
