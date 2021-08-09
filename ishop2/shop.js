@@ -24,8 +24,8 @@ let Shop2 = React.createClass({
         for (let key in this.state) {
             this.setState({[key]: {...this.state[key], className: "good__description"}});
         }
-        
-        if (obj.choose) {
+
+        if (!this.state[keyGood].choose) {
             this.setState({[keyGood]: {...this.state[keyGood], className: "good__description choosed__good"}});
         } else {
             this.setState({[keyGood]: {...this.state[keyGood], className: "good__description"}});
