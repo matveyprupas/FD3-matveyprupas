@@ -11,7 +11,7 @@ let Goods = React.createClass({
         left: React.PropTypes.number.isRequired,
         imageLink: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
-        cost: React.PropTypes.number.isRequired, // ошибка вылазит. не могу понять почему
+        cost: React.PropTypes.number.isRequired, 
     },
 
     getInitialState: function() {
@@ -23,12 +23,11 @@ let Goods = React.createClass({
     },
 
     chooseGood: function(e) {
-        if(e.target.className === "good_del") return; // такая работа с дом допустима?
-
         this.setState({choose: !this.state.choose}, ()=>this.props.cbChooseGood(this.state));
     },
 
     removeGood: function(e) {
+        e.stopPropagation();
         this.setState({show: !this.state.show}, ()=>{
             if(this.state.choose) this.props.cbRemoveGood(this.state);
         });
