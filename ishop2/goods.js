@@ -14,23 +14,13 @@ let Goods = React.createClass({
         cost: React.PropTypes.number.isRequired, 
     },
 
-    getInitialState: function() {
-        return {
-            code: this.props.code,
-            choose: this.props.choose,
-            show: this.props.show,
-        };
-    },
-
-    chooseGood: function(e) {
-        this.setState({choose: !this.state.choose}, ()=>this.props.cbChooseGood(this.state));
+    chooseGood: function() {
+        this.props.cbChooseGood(this.props);
     },
 
     removeGood: function(e) {
         e.stopPropagation();
-        this.setState({show: !this.state.show}, ()=>{
-            if(this.state.choose) this.props.cbRemoveGood(this.state);
-        });
+        this.props.cbRemoveGood(this.props);
     },
 
     render: function() {
