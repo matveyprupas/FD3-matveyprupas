@@ -8,41 +8,23 @@ let Shop2 = React.createClass({
       },
 
     getInitialState: function() {
-        let newStateGoodsArr = this.props.goodsArr.map(el => {
-            el.className = "good__description";
-            return el;
-        });
         return {
-            goodsArr: newStateGoodsArr,
+            goodsArr: this.props.goodsArr,
+            choosedCode: 0,
         };
     },
 
     chooseGood: function(obj) {
-        let clickedGood = this.state.goodsArr.filter(el => obj.code === el.code );
-
-        let newStateGoodsArr = this.state.goodsArr.map(el => {
-            if(el.code === clickedGood[0].code) {
-                el.className = "good__description choosed__good";
-            } else {
-                el.className = "good__description";
-            }
-            return el;
-        });
-
-        this.setState({goodsArr: newStateGoodsArr});
+        this.setState({choosedCode: obj.code});
     },
 
     removeGood: function(obj) {
-        let clickedGood = this.state.goodsArr.filter(el => obj.code === el.code );
-
-        let newStateGoodsArr = this.state.goodsArr.filter(el => el.code !== clickedGood[0].code);
-
-        this.setState({goodsArr: newStateGoodsArr});
+        this.setState({goodsArr: this.state.goodsArr.filter(el => obj.code !== el.code)});
     },
 
     render: function() {
         let goodsArrayDOM = this.state.goodsArr.map(el => {
-            return React.createElement(Goods, {...el, cbChooseGood: this.chooseGood, cbRemoveGood: this.removeGood, key: el.code, className: el.className, choose: false})
+            return React.createElement(Goods, {...el, cbChooseGood: this.chooseGood, cbRemoveGood: this.removeGood, key: el.code, choose: this.state.choosedCode === el.code ? true : false})
         });
         return React.DOM.div( {className: "goods__frame"},
             React.DOM.h1( {className: "goods__title"}, this.props.shopName ),
