@@ -1,27 +1,23 @@
-.goods__frame {
-  /* background-color: pink; */
-}
-
-.goods__text {
-  /* text-transform: uppercase; */
-}
-
 .good__description {
   display: flex;
   align-items: center;
   padding: 10px 0;
 }
 
+.good__description span {
+  margin: 0 10px;
+}
+
 .good__description:nth-of-type(2n + 1) {
   background-color: lightgrey;
+}
+
+.choosed__good.good__description {
+  background-color: pink;
 }
 
 .good_img {
   margin-left: 20px;
   width: 4rem;
   height: 4rem;
-}
-
-.goods__text span {
-  margin: 0 10px;
 }
