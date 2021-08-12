@@ -27,7 +27,6 @@ class Goods extends React.Component {
 
     activateEditMode = (e) => {
       e.stopPropagation();
-
       this.props.cbActivateEditMode( this.props );
     }
   

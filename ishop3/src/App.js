@@ -28,7 +28,7 @@ class Shop3 extends React.Component {
   }
 
   activateEditMode = (obj) => {
-    console.log(obj);
+    // console.log(obj);
     this.setState({choosedCode: obj.code, editMode: true});
   }
 
