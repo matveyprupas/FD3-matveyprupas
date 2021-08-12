@@ -1,0 +1,22 @@
+.good__edit {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.form {
+  display: flex;
+}
+
+.form__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__column label {
+  margin-top: 5px;
+}
+
+.form__buttons {
+  margin-top: 10px;
+}
