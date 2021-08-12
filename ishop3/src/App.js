@@ -17,6 +17,7 @@ class Shop3 extends React.Component {
     goodsArr: this.props.goodsArr,
     choosedCode: 0,
     editMode: false,
+    idArr: [],
   }
 
   chooseGood = (obj) => {
@@ -32,7 +33,23 @@ class Shop3 extends React.Component {
     this.setState({choosedCode: obj.code, editMode: true});
   }
 
+  deactivateEditMode = () => {
+    // console.log(obj);
+    this.setState({choosedCode: 0, editMode: false});
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.goodsArr.length !== prevState.goodsArr.length) this.setState( {idArr: this.state.goodsArr.map(el => el.code)} );
+  }
+
+  componentDidMount = () => {
+    this.setState( {idArr: this.state.goodsArr.map(el => el.code)} );
+  }
+
   render() {
+
+    // console.log(this.state);
+
     let goodsArrJSX = this.state.goodsArr.map(el => {
       return (
         <Goods key = {el.code} code = {el.code} name = {el.name} cost = {el.cost} imageLink = {el.imageLink} left = {el.left} cbChooseGood = {this.chooseGood} cbRemoveGood = {this.removeGood} cbActivateEditMode = {this.activateEditMode} choose = {this.state.choosedCode === el.code ? true : false}/>
@@ -54,7 +71,7 @@ class Shop3 extends React.Component {
         {
           goodCardProduct &&
           this.state.editMode &&
-          <GoodEdit code = {goodCardProduct.code} name = {goodCardProduct.name} cost = {goodCardProduct.cost} imageLink = {goodCardProduct.imageLink} left = {goodCardProduct.left} />
+          <GoodEdit code = {goodCardProduct.code} name = {goodCardProduct.name} cost = {goodCardProduct.cost} imageLink = {goodCardProduct.imageLink} left = {goodCardProduct.left} idArr = {this.state.idArr} cbDeactivateEditMode = {this.deactivateEditMode} />
         }
       </div>
     )

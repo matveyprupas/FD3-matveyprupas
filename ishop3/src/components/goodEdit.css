@@ -20,3 +20,19 @@
 .form__buttons {
   margin-top: 10px;
 }
+
+.verify + span {
+  display: none;
+  /* color: red; */
+}
+
+.not-verify {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.not-verify + span {
+  position: absolute;
+  margin-left: 10px;
+  display: inline;
+  color: red;
+}

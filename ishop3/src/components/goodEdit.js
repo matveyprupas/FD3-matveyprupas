@@ -10,6 +10,8 @@ class GoodEdit extends React.Component {
         imageLink: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         cost: PropTypes.number.isRequired, 
+        idArr: PropTypes.array.isRequired, 
+        cbDeactivateEditMode: PropTypes.func.isRequired,
     }
 
     state = {
@@ -18,7 +20,13 @@ class GoodEdit extends React.Component {
       left: this.props.left,
       imageLink: this.props.imageLink,
       cost: this.props.cost,
-      verify: true,
+      idArr: this.props.idArr,
+      verify: {
+        name: true,
+        cost: true,
+        left: true,
+        imageLink: true,
+      },
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -27,6 +35,38 @@ class GoodEdit extends React.Component {
       if (prevProps.left !== this.props.left) this.setState( {left: this.props.left} );
       if (prevProps.imageLink !== this.props.imageLink) this.setState( {imageLink: this.props.imageLink} );
       if (prevProps.cost !== this.props.cost) this.setState( {cost: this.props.cost} );
+    }
+
+    deactivateEditMode = () => {
+      this.props.cbDeactivateEditMode();
+    }
+
+    verifyInputValue = (e, value) => {
+      // console.log(value);
+      switch (e.target.id) {
+        case "form__name":
+          let nameRE = /^[^а-я]+$/i;
+          if(!nameRE.test(value)) this.setState( {verify: {...this.state.verify, name: false}} );
+          else this.setState( {verify: {...this.state.verify, name: true}} );
+          break;
+        case "form__price":
+          let priceRE = /^\d+$/i;
+          if(!priceRE.test(value)) this.setState( {verify: {...this.state.verify, cost: false}});
+          else this.setState( {verify: {...this.state.verify, cost: true}} );
+          break;
+        case "form__url":
+          let urlRE = /^https?[^а-я\s]+$/i;
+          if(!urlRE.test(value)) this.setState( {verify: {...this.state.verify, imageLink: false}});
+          else this.setState( {verify: {...this.state.verify, imageLink: true}} );          
+          break;
+        case "form__quantity":
+          let leftRE = /^\d+$/i;
+          if(!leftRE.test(value)) this.setState( {verify: {...this.state.verify, left: false}});
+          else this.setState( {verify: {...this.state.verify, left: true}} );
+          break;
+        default:
+          break;
+      }
     }
 
     editInputValue = (e) => {
@@ -46,13 +86,18 @@ class GoodEdit extends React.Component {
           break;
         default:
           break;
-
       }
+
+      this.verifyInputValue(e, e.target.value);
     }
+
+
   
   
     render() {
-      // console.log(this.state.name);
+      console.log(this.props.idArr);
+      console.log(this.state.idArr);
+
 
       return (
         <div className = "good__edit">
@@ -69,15 +114,27 @@ class GoodEdit extends React.Component {
 
               <div className = "form__column">
                 <span>{this.state.code}</span>
-                <input type = "text" id = "form__name" value = {this.state.name} onChange = {this.editInputValue} />
-                <input type = "text" id = "form__price" value = {this.state.cost} onChange = {this.editInputValue} />
-                <input type = "text" id = "form__url" value = {this.state.imageLink} onChange = {this.editInputValue} />
-                <input type = "text" id = "form__quantity" value = {this.state.left} onChange = {this.editInputValue} />
+                <div>
+                  <input type = "text" id = "form__name" value = {this.state.name} onChange = {this.editInputValue} className = {this.state.verify.name ? "verify" : "not-verify" } />
+                  <span>Only english and numbers</span>
+                </div>
+                <div>
+                  <input type = "text" id = "form__price" value = {this.state.cost} onChange = {this.editInputValue} className = {this.state.verify.cost ? "verify" : "not-verify" }/>
+                  <span>Only numbers</span>
+                </div>
+                <div>
+                  <input type = "text" id = "form__url" value = {this.state.imageLink} onChange = {this.editInputValue} className = {this.state.verify.imageLink ? "verify" : "not-verify" }/>
+                  <span>Start from "http" or "https" and english</span>
+                </div>
+                <div>
+                  <input type = "text" id = "form__quantity" value = {this.state.left} onChange = {this.editInputValue} className = {this.state.verify.left ? "verify" : "not-verify" }/>
+                  <span>Only numbers</span>
+                </div>
               </div>
             </div>
             <div className = "form__buttons">
-              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify ? true : false} />
-              <input className = "good_del" type = "button" value = "Cancel" />
+              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} />
+              <input className = "good_del" type = "button" value = "Cancel" onClick = {this.deactivateEditMode} />
             </div>
 
 
