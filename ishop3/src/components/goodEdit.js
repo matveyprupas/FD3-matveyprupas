@@ -35,6 +35,7 @@ class GoodEdit extends React.Component {
       if (prevProps.left !== this.props.left) this.setState( {left: this.props.left} );
       if (prevProps.imageLink !== this.props.imageLink) this.setState( {imageLink: this.props.imageLink} );
       if (prevProps.cost !== this.props.cost) this.setState( {cost: this.props.cost} );
+      if (prevProps.idArr.length !== this.props.idArr.length) this.setState( {idArr: this.props.idArr} );
     }
 
     deactivateEditMode = () => {
@@ -91,18 +92,13 @@ class GoodEdit extends React.Component {
       this.verifyInputValue(e, e.target.value);
     }
 
-
-  
-  
     render() {
-      console.log(this.props.idArr);
-      console.log(this.state.idArr);
+      console.log(this.props);
 
 
       return (
         <div className = "good__edit">
             <h2>Edit existing product</h2>
-
             <div className = "form">
               <div className = "form__column">
                 <span>ID:</span>
@@ -111,7 +107,6 @@ class GoodEdit extends React.Component {
                 <label htmlFor = "form__url">URL:</label>
                 <label htmlFor = "form__quantity">Quantity:</label>
               </div>
-
               <div className = "form__column">
                 <span>{this.state.code}</span>
                 <div>
@@ -136,8 +131,6 @@ class GoodEdit extends React.Component {
               <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} />
               <input className = "good_del" type = "button" value = "Cancel" onClick = {this.deactivateEditMode} />
             </div>
-
-
         </div>
       )
     }
