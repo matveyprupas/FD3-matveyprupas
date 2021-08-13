@@ -39,12 +39,7 @@ class Shop3 extends React.Component {
         code = i;
       }
     }
-    
-    console.log(this.state.choosedCode, this.state.editMode);
-    
-    debugger;
-    
-    this.setState({choosedCode: code, editMode: true}, ()=>console.log(this.state.choosedCode, this.state.editMode));
+    this.setState({choosedCode: code, editMode: true});
   }
 
   deactivateEditMode = () => {
@@ -81,8 +76,8 @@ class Shop3 extends React.Component {
       imageLink: undefined, 
       left: undefined,
     };
-    console.log("this.state.choosedGood: " + this.state.choosedGood);
-    console.log("this.state.editMode: " + this.state.editMode);
+    // console.log("this.state.choosedGood: " + this.state.choosedGood);
+    // console.log("this.state.editMode: " + this.state.editMode);
 
     return (
       <div className="goods__frame">
@@ -100,7 +95,7 @@ class Shop3 extends React.Component {
         {
           goodEditProduct &&
           this.state.editMode &&
-          <GoodEdit code = {goodEditProduct.code || this.state.choosedGood} name = {goodEditProduct.name} cost = {goodEditProduct.cost} imageLink = {goodEditProduct.imageLink} left = {goodEditProduct.left} idArr = {this.state.idArr} cbDeactivateEditMode = {this.deactivateEditMode} />
+          <GoodEdit code = {goodEditProduct.code || this.state.choosedCode} name = {goodEditProduct.name} cost = {goodEditProduct.cost} imageLink = {goodEditProduct.imageLink} left = {goodEditProduct.left} idArr = {this.state.idArr} cbDeactivateEditMode = {this.deactivateEditMode} />
         }
       </div>
     )

@@ -6,12 +6,12 @@ class GoodEdit extends React.Component {
 
     static propTypes = {
         code: PropTypes.number.isRequired,
-        left: PropTypes.number.isRequired,
-        imageLink: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        cost: PropTypes.number.isRequired, 
-        idArr: PropTypes.array.isRequired, 
-        cbDeactivateEditMode: PropTypes.func.isRequired,
+        left: PropTypes.number,
+        imageLink: PropTypes.string,
+        name: PropTypes.string,
+        cost: PropTypes.number, 
+        idArr: PropTypes.array, 
+        cbDeactivateEditMode: PropTypes.func,
     }
 
     state = {
@@ -27,6 +27,7 @@ class GoodEdit extends React.Component {
         left: true,
         imageLink: true,
       },
+      isOldGood: this.props.idArr.includes(this.props.code),
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -36,6 +37,7 @@ class GoodEdit extends React.Component {
       if (prevProps.imageLink !== this.props.imageLink) this.setState( {imageLink: this.props.imageLink} );
       if (prevProps.cost !== this.props.cost) this.setState( {cost: this.props.cost} );
       if (prevProps.idArr.length !== this.props.idArr.length) this.setState( {idArr: this.props.idArr} );
+      if (this.state.isOldGood !== this.props.idArr.includes(this.props.code)) this.setState( {isOldGood: this.props.idArr.includes(this.props.code)} );
     }
 
     deactivateEditMode = () => {
@@ -88,17 +90,20 @@ class GoodEdit extends React.Component {
         default:
           break;
       }
-
       this.verifyInputValue(e, e.target.value);
     }
 
+    saveNewProductValues = () => {
+      console.log(this.state);
+    }
+
     render() {
-      console.log(this.props);
+      // console.log(this.props.idArr.includes(this.props.code));
 
 
       return (
         <div className = "good__edit">
-            <h2>Edit existing product</h2>
+            <h2>{this.state.isOldGood ? "Edit existing product" : "Add new product"}</h2>
             <div className = "form">
               <div className = "form__column">
                 <span>ID:</span>
@@ -110,19 +115,19 @@ class GoodEdit extends React.Component {
               <div className = "form__column">
                 <span>{this.state.code}</span>
                 <div>
-                  <input type = "text" id = "form__name" value = {this.state.name} onChange = {this.editInputValue} className = {this.state.verify.name ? "verify" : "not-verify" } />
+                  <input type = "text" id = "form__name" value = {this.state.name} onChange = {this.editInputValue} onBlur = {this.editInputValue} className = {this.state.verify.name ? "verify" : "not-verify" } />
                   <span>Only english and numbers</span>
                 </div>
                 <div>
-                  <input type = "text" id = "form__price" value = {this.state.cost} onChange = {this.editInputValue} className = {this.state.verify.cost ? "verify" : "not-verify" }/>
+                  <input type = "text" id = "form__price" value = {this.state.cost} onChange = {this.editInputValue} onBlur = {this.editInputValue} className = {this.state.verify.cost ? "verify" : "not-verify" }/>
                   <span>Only numbers</span>
                 </div>
                 <div>
-                  <input type = "text" id = "form__url" value = {this.state.imageLink} onChange = {this.editInputValue} className = {this.state.verify.imageLink ? "verify" : "not-verify" }/>
+                  <input type = "text" id = "form__url" value = {this.state.imageLink} onChange = {this.editInputValue} onBlur = {this.editInputValue} className = {this.state.verify.imageLink ? "verify" : "not-verify" }/>
                   <span>Start from "http" or "https" and english</span>
                 </div>
                 <div>
-                  <input type = "text" id = "form__quantity" value = {this.state.left} onChange = {this.editInputValue} className = {this.state.verify.left ? "verify" : "not-verify" }/>
+                  <input type = "text" id = "form__quantity" value = {this.state.left} onChange = {this.editInputValue} onBlur = {this.editInputValue} className = {this.state.verify.left ? "verify" : "not-verify" }/>
                   <span>Only numbers</span>
                 </div>
               </div>
