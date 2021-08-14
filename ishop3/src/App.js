@@ -43,7 +43,6 @@ class Shop3 extends React.Component {
   }
 
   deactivateEditMode = () => {
-    // console.log(obj);
     this.setState({choosedCode: 0, editMode: false});
   }
 
@@ -55,10 +54,29 @@ class Shop3 extends React.Component {
     this.setState( {idArr: this.state.goodsArr.map(el => el.code)} );
   }
 
+  saveNewProductValues = (obj) => {
+    if (this.state.idArr.includes(obj.code)) {
+      this.updateOldGood(obj);
+    } else {
+      this.addNewGood(obj);
+    }
+  }
+
+  addNewGood = (obj) => {
+    this.setState ( {goodsArr: [...this.state.goodsArr, obj], editMode: false}, ()=> console.log(this.state.goodsArr));
+  }
+
+  updateOldGood = (obj) => {
+    console.log(this.state.goodsArr);
+    let index = this.state.goodsArr.findIndex((el, i) => obj.code === el.code);
+
+    let updatedGoodsArr = [...this.state.goodsArr];
+    updatedGoodsArr[index] = obj;
+
+    this.setState ( {goodsArr: updatedGoodsArr, editMode: false}, ()=> console.log(this.state.goodsArr));
+  }
+
   render() {
-
-    // console.log(this.state);
-
     let goodsArrJSX = this.state.goodsArr.map(el => {
       return (
         <Goods key = {el.code} code = {el.code} name = {el.name} cost = {el.cost} imageLink = {el.imageLink} left = {el.left} cbChooseGood = {this.chooseGood} cbRemoveGood = {this.removeGood} cbActivateEditMode = {this.activateEditMode} choose = {this.state.choosedCode === el.code ? true : false}/>
@@ -76,8 +94,6 @@ class Shop3 extends React.Component {
       imageLink: undefined, 
       left: undefined,
     };
-    // console.log("this.state.choosedGood: " + this.state.choosedGood);
-    // console.log("this.state.editMode: " + this.state.editMode);
 
     return (
       <div className="goods__frame">
@@ -95,7 +111,7 @@ class Shop3 extends React.Component {
         {
           goodEditProduct &&
           this.state.editMode &&
-          <GoodEdit code = {goodEditProduct.code || this.state.choosedCode} name = {goodEditProduct.name} cost = {goodEditProduct.cost} imageLink = {goodEditProduct.imageLink} left = {goodEditProduct.left} idArr = {this.state.idArr} cbDeactivateEditMode = {this.deactivateEditMode} />
+          <GoodEdit code = {goodEditProduct.code || this.state.choosedCode} name = {goodEditProduct.name} cost = {goodEditProduct.cost} imageLink = {goodEditProduct.imageLink} left = {goodEditProduct.left} idArr = {this.state.idArr} cbDeactivateEditMode = {this.deactivateEditMode} cbSaveNewProductValues = {this.saveNewProductValues} />
         }
       </div>
     )

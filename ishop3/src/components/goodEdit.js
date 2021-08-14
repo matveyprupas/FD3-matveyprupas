@@ -12,6 +12,7 @@ class GoodEdit extends React.Component {
         cost: PropTypes.number, 
         idArr: PropTypes.array, 
         cbDeactivateEditMode: PropTypes.func,
+        cbSaveNewProductValues: PropTypes.func,
     }
 
     state = {
@@ -45,7 +46,6 @@ class GoodEdit extends React.Component {
     }
 
     verifyInputValue = (e, value) => {
-      // console.log(value);
       switch (e.target.id) {
         case "form__name":
           let nameRE = /^[^а-я]+$/i;
@@ -73,7 +73,6 @@ class GoodEdit extends React.Component {
     }
 
     editInputValue = (e) => {
-      // console.log(e.target.id);
       switch (e.target.id) {
         case "form__name":
           this.setState( {name: e.target.value} );
@@ -94,13 +93,17 @@ class GoodEdit extends React.Component {
     }
 
     saveNewProductValues = () => {
-      console.log(this.state);
+      console.log("EDIT: saveNewProductValues");
+      this.props.cbSaveNewProductValues( {
+        name: this.state.name,
+        cost: this.state.cost,
+        code: this.state.code,
+        left: this.state.left,
+        imageLink: this.state.imageLink,
+      } );
     }
 
     render() {
-      // console.log(this.props.idArr.includes(this.props.code));
-
-
       return (
         <div className = "good__edit">
             <h2>{this.state.isOldGood ? "Edit existing product" : "Add new product"}</h2>
@@ -133,7 +136,7 @@ class GoodEdit extends React.Component {
               </div>
             </div>
             <div className = "form__buttons">
-              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} />
+              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} onClick = {this.saveNewProductValues} />
               <input className = "good_del" type = "button" value = "Cancel" onClick = {this.deactivateEditMode} />
             </div>
         </div>
