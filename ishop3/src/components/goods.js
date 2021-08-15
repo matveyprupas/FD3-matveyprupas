@@ -10,10 +10,17 @@ class Goods extends React.Component {
         cbChooseGood: PropTypes.func.isRequired,        
         cbRemoveGood: PropTypes.func.isRequired,
         cbActivateEditMode: PropTypes.func.isRequired,
-        left: PropTypes.number.isRequired,
+        left: PropTypes.oneOfType([
+          PropTypes.string.isRequired,
+          PropTypes.number.isRequired
+        ]),
+        cost: PropTypes.oneOfType([
+          PropTypes.string.isRequired,
+          PropTypes.number.isRequired
+        ]),
         imageLink: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        cost: PropTypes.number.isRequired, 
+        editMode: PropTypes.bool.isRequired, 
     }
   
     chooseGood = () => {
@@ -37,8 +44,8 @@ class Goods extends React.Component {
           <span className = "good_name">{this.props.name}</span>
           <span className = "good_cost">{this.props.cost} $</span>
           <span className = "good_left">{this.props.left} pcs.</span>
-          <input className = "good_del" type = "button" value = "Edit" onClick = {this.activateEditMode} />
-          <input className = "good_del" type = "button" value = "Delete" onClick = {this.removeGood} />
+          <input className = "good_del" type = "button" value = "Edit" onClick = {this.activateEditMode} disabled = {this.props.editMode ? true : false} />
+          <input className = "good_del" type = "button" value = "Delete" onClick = {this.removeGood} disabled = {this.props.editMode ? true : false} />
         </div>
       )
     }

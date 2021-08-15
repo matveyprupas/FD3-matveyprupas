@@ -6,10 +6,16 @@ class GoodEdit extends React.Component {
 
     static propTypes = {
         code: PropTypes.number.isRequired,
-        left: PropTypes.number,
+        left: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number
+        ]),
         imageLink: PropTypes.string,
         name: PropTypes.string,
-        cost: PropTypes.number, 
+        cost: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number
+        ]),
         idArr: PropTypes.array, 
         cbDeactivateEditMode: PropTypes.func,
         cbSaveNewProductValues: PropTypes.func,
@@ -93,7 +99,6 @@ class GoodEdit extends React.Component {
     }
 
     saveNewProductValues = () => {
-      console.log("EDIT: saveNewProductValues");
       this.props.cbSaveNewProductValues( {
         name: this.state.name,
         cost: this.state.cost,
