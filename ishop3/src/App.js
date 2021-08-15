@@ -21,7 +21,7 @@ class Shop3 extends React.Component {
   }
 
   chooseGood = (obj) => {
-    this.setState( {choosedCode: obj.code, editMode: false} );
+    if (!this.state.editMode) this.setState( {choosedCode: obj.code, editMode: false} );
   }
 
   removeGood = (obj) => {
@@ -63,23 +63,22 @@ class Shop3 extends React.Component {
   }
 
   addNewGood = (obj) => {
-    this.setState ( {goodsArr: [...this.state.goodsArr, obj], editMode: false}, ()=> console.log(this.state.goodsArr));
+    this.setState ( {goodsArr: [...this.state.goodsArr, obj], editMode: false} );
   }
 
   updateOldGood = (obj) => {
-    console.log(this.state.goodsArr);
     let index = this.state.goodsArr.findIndex((el, i) => obj.code === el.code);
 
     let updatedGoodsArr = [...this.state.goodsArr];
     updatedGoodsArr[index] = obj;
 
-    this.setState ( {goodsArr: updatedGoodsArr, editMode: false}, ()=> console.log(this.state.goodsArr));
+    this.setState ( {goodsArr: updatedGoodsArr, editMode: false} );
   }
 
   render() {
     let goodsArrJSX = this.state.goodsArr.map(el => {
       return (
-        <Goods key = {el.code} code = {el.code} name = {el.name} cost = {el.cost} imageLink = {el.imageLink} left = {el.left} cbChooseGood = {this.chooseGood} cbRemoveGood = {this.removeGood} cbActivateEditMode = {this.activateEditMode} choose = {this.state.choosedCode === el.code ? true : false}/>
+        <Goods key = {el.code} code = {el.code} name = {el.name} cost = {el.cost} imageLink = {el.imageLink} left = {el.left} cbChooseGood = {this.chooseGood} cbRemoveGood = {this.removeGood} cbActivateEditMode = {this.activateEditMode} choose = {this.state.choosedCode === el.code ? true : false} editMode = {this.state.editMode} />
       ); 
     });
 
@@ -89,10 +88,10 @@ class Shop3 extends React.Component {
 
     if(!Object.keys(goodEditProduct).length) goodEditProduct = {
       code: this.state.choosedGood,
-      name: undefined, 
-      cost: undefined, 
-      imageLink: undefined, 
-      left: undefined,
+      name: "", 
+      cost: "", 
+      imageLink: "", 
+      left: "",
     };
 
     return (
@@ -106,7 +105,7 @@ class Shop3 extends React.Component {
         {
           goodCardProduct &&
           !this.state.editMode &&
-          <GoodCard code = {goodCardProduct.code} name = {goodCardProduct.name} cost = {goodCardProduct.cost} imageLink = {goodCardProduct.imageLink} left = {goodCardProduct.left} />
+          <GoodCard code = {goodCardProduct.code} name = {goodCardProduct.name} cost = {goodCardProduct.cost} imageLink = {goodCardProduct.imageLink} left = {goodCardProduct.left} editMode = {this.state.editMode} />
         }
         {
           goodEditProduct &&
