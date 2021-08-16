@@ -79,13 +79,13 @@ class GoodEdit extends React.Component {
           this.setState( {name: e.target.value} );
           break;
         case "form__price":
-          this.setState( {cost: +e.target.value} );
+          this.setState( {cost: Number(e.target.value)} );
           break;
         case "form__url":
           this.setState( {imageLink: e.target.value} );
           break;
         case "form__quantity":
-          this.setState( {left: +e.target.value} );
+          this.setState( {left: Number(e.target.value)} );
           break;
         default:
           break;
