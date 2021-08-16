@@ -73,7 +73,6 @@ class GoodEdit extends React.Component {
     }
 
     editInputValue = (e) => {
-      console.log(this.state)
       switch (e.target.id) {
         case "form__name":
           this.setState( {name: e.target.value} );
