@@ -6,16 +6,10 @@ class GoodEdit extends React.Component {
 
     static propTypes = {
         code: PropTypes.number.isRequired,
-        left: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number
-        ]),
+        left: PropTypes.number,
         imageLink: PropTypes.string,
         name: PropTypes.string,
-        cost: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number
-        ]),
+        cost: PropTypes.number,
         idArr: PropTypes.array, 
         cbDeactivateEditMode: PropTypes.func,
         cbSaveNewProductValues: PropTypes.func,
@@ -79,18 +73,19 @@ class GoodEdit extends React.Component {
     }
 
     editInputValue = (e) => {
+      console.log(this.state)
       switch (e.target.id) {
         case "form__name":
           this.setState( {name: e.target.value} );
           break;
         case "form__price":
-          this.setState( {cost: e.target.value} );
+          this.setState( {cost: Number(e.target.value)} );
           break;
         case "form__url":
           this.setState( {imageLink: e.target.value} );
           break;
         case "form__quantity":
-          this.setState( {left: e.target.value} );
+          this.setState( {left: Number(e.target.value)} );
           break;
         default:
           break;
@@ -141,7 +136,7 @@ class GoodEdit extends React.Component {
               </div>
             </div>
             <div className = "form__buttons">
-              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} onClick = {this.saveNewProductValues} />
+              <input className = "good_del" type = "button" value = "Save" disabled = {!this.state.name || !this.state.cost || !this.state.left || !this.state.imageLink || !this.state.verify.name || !this.state.verify.cost || !this.state.verify.left || !this.state.verify.imageLink ? true : false} onClick = {this.saveNewProductValues} />
               <input className = "good_del" type = "button" value = "Cancel" onClick = {this.deactivateEditMode} />
             </div>
         </div>

@@ -6,14 +6,8 @@ class GoodCard extends React.Component {
 
     static propTypes = {
         code: PropTypes.number.isRequired,
-        left: PropTypes.oneOfType([
-          PropTypes.string.isRequired,
-          PropTypes.number.isRequired
-        ]),
-        cost: PropTypes.oneOfType([
-          PropTypes.string.isRequired,
-          PropTypes.number.isRequired
-        ]),
+        left: PropTypes.number.isRequired,
+        cost: PropTypes.number.isRequired,
         imageLink: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         editMode: PropTypes.bool.isRequired, 

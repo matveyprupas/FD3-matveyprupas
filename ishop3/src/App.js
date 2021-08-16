@@ -88,10 +88,10 @@ class Shop3 extends React.Component {
 
     if(!Object.keys(goodEditProduct).length) goodEditProduct = {
       code: this.state.choosedGood,
-      name: "", 
-      cost: "", 
-      imageLink: "", 
-      left: "",
+      name: undefined, 
+      cost: undefined, 
+      imageLink: undefined, 
+      left: undefined,
     };
 
     return (
