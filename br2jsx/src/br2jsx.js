@@ -7,7 +7,7 @@ class BR2JSX extends React.Component {
       let regEx = /<br\s?\/?>/i;
       let resultText = this.props.text.split(regEx).map((el, i) => {
           if (!i) return el;
-            let res = [<br />, el];
+            let res = [<br key={i} />, el];
             return res;
         }).flat(1);
       console.log(resultText);
