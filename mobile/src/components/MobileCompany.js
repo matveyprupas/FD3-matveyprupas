@@ -15,7 +15,6 @@ class MobileCompany extends React.PureComponent {
         lastname: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         secondname: PropTypes.string.isRequired,
-        active: PropTypes.bool.isRequired,
         balance: PropTypes.number.isRequired,
       })
     ),
@@ -25,6 +24,7 @@ class MobileCompany extends React.PureComponent {
     name: this.props.name,
     clients: this.props.clients,
     editMode: false,
+    editedClient: null,
   };
 
   setName = (str) => {
@@ -39,8 +39,9 @@ class MobileCompany extends React.PureComponent {
     this.setName("Velcom");
   };
 
-  activateEditMode = () => {
-    this.setState( {editMode: true} );
+  activateEditMode = (obj) => {
+    console.log(obj);
+    this.setState( {editMode: true, editedClient: obj} );
   };
 
   deactivateEditMode = () => {
@@ -52,7 +53,7 @@ class MobileCompany extends React.PureComponent {
     console.log("MobileCompany render");
 
     var clientsCode=this.state.clients.map( c =>
-      <MobileClient key={c.id} id={c.id} lastname={c.lastname} name={c.name} secondname={c.secondname} active={c.active} balance={c.balance} />
+      <MobileClient key={c.id} id={c.id} lastname={c.lastname} name={c.name} secondname={c.secondname} active={c.active} balance={c.balance} cbActivateEditMode = {this.activateEditMode} />
     );
 
     return (
@@ -83,7 +84,7 @@ class MobileCompany extends React.PureComponent {
         <input type="button" value="Add client" onClick= {this.activateEditMode}/>
         {
           this.state.editMode &&
-          <EditMode id={1} lastname="Prupas" name="Matvey" secondname="Viktorovich" balance={100500} cbDeactivateEditMode = {this.deactivateEditMode} />
+          <EditMode id={this.state.editedClient.id} lastname={this.state.editedClient.lastname} name={this.state.editedClient.name} secondname={this.state.editedClient.secondname} balance={this.state.editedClient.balance} cbDeactivateEditMode = {this.deactivateEditMode} />
         }
       </div>
     )

@@ -10,11 +10,15 @@ class MobileClient extends React.PureComponent {
     lastname: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     secondname: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
     balance: PropTypes.number.isRequired,
+    cbActivateEditMode: PropTypes.func.isRequired,
   };
 
   state = {
+    id: this.props.id,
+    lastname: this.props.lastname,
+    name: this.props.name,
+    secondname: this.props.secondname,
     balance: this.props.balance,
     active: this.props.balance < 0 ? false : true,
   };
@@ -32,7 +36,7 @@ class MobileClient extends React.PureComponent {
             
             <div className='mobile-client__active' style={this.state.active ? {backgroundColor: "green"} : {backgroundColor: "red"}}>{this.state.active ? "active" : "blocked"}</div>
             
-            <input type="button" value="Edit" />
+            <input type="button" value="Edit" onClick={()=>this.props.cbActivateEditMode(this.state)} />
         </div>
     );
 
