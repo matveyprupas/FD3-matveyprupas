@@ -1,0 +1,18 @@
+.mobile-company__client .mobile-client__row:first-of-type {
+  font-weight: 700;
+}
+
+.mobile-client__row {
+  /* max-width: 800px; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobile-client__row:nth-of-type(2n + 1) {
+  background-color: lightgrey;
+}
+
+.mobile-client__row > * {
+  width: 200px;
+  padding: 1rem 0;
+}
