@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {mobileEvents} from './events';
 
 import './editMode.css';
 
@@ -11,12 +12,16 @@ class EditMode extends React.PureComponent {
     name: PropTypes.string,
     secondname: PropTypes.string,
     balance: PropTypes.number,
+    newClient: PropTypes.bool,
     cbDeactivateEditMode: PropTypes.func,
   };
 
   state = {
+    id: this.props.id,
     lastname: this.props.lastname,
     name: this.props.name,
+    secondname: this.props.secondname,
+    balance: this.props.balance,
   };
 
   newLastnameRef = null;
@@ -45,24 +50,29 @@ class EditMode extends React.PureComponent {
 
     if ( this.newLastnameRef ) {
         newState.lastname = this.newLastnameRef.value;
-        this.setState(newState);
+        this.setState( newState );
     }
     if ( this.newNameRef ) {
         newState.name = this.newNameRef.value
-        this.setState(newState);
+        this.setState( newState );
     }
     if ( this.newSecondnameRef ) {
         newState.secondname = this.newSecondnameRef.value
-        this.setState(newState);
+        this.setState( newState );
     }
     if ( this.newBalanceRef ) {
         newState.balance = this.newBalanceRef.value
-        this.setState(newState);
+        this.setState( newState );
     }
-
+    // mobileEvents.emit('editedClientInfo',this.state);
   };
 
-
+  componentDidUpdate = (oldProps, oldState) => {
+    let newState = {...this.props};
+    delete newState.cbDeactivateEditMode;
+    // console.log(newState);
+    this.setState(newState)
+  };
 
   render() {
 
@@ -71,7 +81,7 @@ class EditMode extends React.PureComponent {
     
     return (
         <div className='edit-form'>
-            <h2>Add new client</h2>
+            <h2>{this.props.newClient ? "Add new client" : "Edit client info"}</h2>
 
             <div className="edit-form__row">
                 <label htmlFor="edit-form__lastname">Lastname</label>
