@@ -1,22 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {mobileEvents} from './events';
+
 
 import './MobileClient.css';
 
 class MobileClient extends React.PureComponent {
 
   static propTypes = {
-    id: PropTypes.number.isRequired,
-    lastname: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    secondname: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
-    balance: PropTypes.number.isRequired,
+    clientInfo: PropTypes.object.isRequired,
+    cbActivateEditMode: PropTypes.func.isRequired,
   };
 
   state = {
-    balance: this.props.balance,
-    active: this.props.balance < 0 ? false : true,
+    id: this.props.clientInfo.id,
+    lastname: this.props.clientInfo.lastname,
+    name: this.props.clientInfo.name,
+    secondname: this.props.clientInfo.secondname,
+    balance: this.props.clientInfo.balance,
+    active: this.props.clientInfo.balance < 0 ? false : true,
+  };
+
+  changeCientInfo = (obj) => {
+    console.log(obj);
+  };
+
+  componentDidMount = () => {
+    mobileEvents.addListener('editedClientInfo',this.changeCientInfo);
+  };
+
+  componentWillUnmount = () => {
+    mobileEvents.removeListener('editedClientInfo',this.changeCientInfo);
   };
 
   render() {
@@ -25,14 +39,14 @@ class MobileClient extends React.PureComponent {
     
     return (
         <div className='mobile-client mobile-client__row'>
-            <div className='mobile-client__lastname'>{this.props.lastname}</div>
-            <div className='mobile-client__name'>{this.props.name}</div>
-            <div className='mobile-client__secondname'>{this.props.secondname}</div>
+            <div className='mobile-client__lastname'>{this.state.lastname}</div>
+            <div className='mobile-client__name'>{this.state.name}</div>
+            <div className='mobile-client__secondname'>{this.state.secondname}</div>
             <div className='mobile-client__balance'>{this.state.balance}</div>
             
             <div className='mobile-client__active' style={this.state.active ? {backgroundColor: "green"} : {backgroundColor: "red"}}>{this.state.active ? "active" : "blocked"}</div>
             
-            <input type="button" value="Edit" />
+            <input type="button" value="Edit" onClick={()=>this.props.cbActivateEditMode({...this.state, newClient: false})} />
         </div>
     );
 
