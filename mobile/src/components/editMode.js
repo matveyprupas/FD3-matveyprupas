@@ -68,9 +68,9 @@ class EditMode extends React.PureComponent {
   };
 
   componentDidUpdate = (oldProps, oldState) => {
+    console.log("EditMode componentDidUpdate");
     let newState = {...this.props};
     delete newState.cbDeactivateEditMode;
-    // console.log(newState);
     this.setState(newState)
   };
 
