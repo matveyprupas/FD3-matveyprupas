@@ -13,6 +13,7 @@ class EditMode extends React.PureComponent {
     secondname: PropTypes.string,
     balance: PropTypes.number,
     newClient: PropTypes.bool,
+    clientsID: PropTypes.array,
     cbDeactivateEditMode: PropTypes.func,
   };
 
@@ -22,6 +23,7 @@ class EditMode extends React.PureComponent {
     name: this.props.name,
     secondname: this.props.secondname,
     balance: this.props.balance,
+    clientsID: this.props.clientsID,
   };
 
   newLastnameRef = null;
@@ -46,38 +48,54 @@ class EditMode extends React.PureComponent {
   };
 
   setNewState = () => {
-    let newState = {};
+    let newState = {id: this.state.id};
+    
+    if (!this.state.id) {
 
-    if ( this.newLastnameRef ) {
-        newState.lastname = this.newLastnameRef.value;
-        this.setState( newState );
-    }
-    if ( this.newNameRef ) {
-        newState.name = this.newNameRef.value
-        this.setState( newState );
-    }
-    if ( this.newSecondnameRef ) {
-        newState.secondname = this.newSecondnameRef.value
-        this.setState( newState );
-    }
-    if ( this.newBalanceRef ) {
-        newState.balance = this.newBalanceRef.value
-        this.setState( newState );
-    }
-    // mobileEvents.emit('editedClientInfo',this.state);
-  };
+      for (let i = 1; i <= this.state.clientsID.length; i++) {
+        // console.log(i, this.state.clientsID,this.state.clientsID.includes(i))
+        if (this.state.clientsID.includes(i)) {
+          continue;
+        } else {
+          newState.id = i;
+          break;
+        }
+      }
 
-  componentDidUpdate = (oldProps, oldState) => {
-    let newState = {...this.props};
-    delete newState.cbDeactivateEditMode;
+      newState.lastname = this.newLastnameRef.value;
+      newState.name = this.newNameRef.value;
+      newState.secondname = this.newSecondnameRef.value;
+      newState.balance = parseFloat(this.newBalanceRef.value);
+
+      this.setState( newState );
+    }
+
+    if ( this.newLastnameRef && this.newLastnameRef.value !== this.state.lastname ) {
+      newState.lastname = this.newLastnameRef.value;
+      this.setState( newState );
+    }
+    if ( this.newNameRef && this.newNameRef.value !== this.state.name ) {
+      newState.name = this.newNameRef.value;
+      this.setState( newState );
+    }
+    if ( this.newSecondnameRef && this.newSecondnameRef.value !== this.state.secondname ) {
+      newState.secondname = this.newSecondnameRef.value;
+      this.setState( newState );
+    }
+    if ( this.newBalanceRef && parseFloat(this.newBalanceRef.value) !== this.state.balance ) {
+      newState.balance = parseFloat(this.newBalanceRef.value);
+      this.setState( newState );
+    }
+
     // console.log(newState);
-    this.setState(newState)
+    mobileEvents.emit('editedClientInfo', newState);
+    this.props.cbDeactivateEditMode();
   };
+
 
   render() {
 
     console.log("EditMode id="+this.props.id+" render");
-    // console.log(this.props.id+" render");
     
     return (
         <div className='edit-form'>
@@ -100,7 +118,7 @@ class EditMode extends React.PureComponent {
 
             <div className="edit-form__row">
                 <label htmlFor="edit-form__balance">Balance</label>
-                <input type="text" id='edit-form__balance' defaultValue={this.props.balance ? this.props.balance : ""} ref={this.setNewBalanceRef} />
+                <input type="text" id='edit-form__balance' defaultValue={this.props.balance ? this.props.balance : 0} ref={this.setNewBalanceRef} />
             </div>
 
             <input type="button" value="Save" onClick = {this.setNewState} />

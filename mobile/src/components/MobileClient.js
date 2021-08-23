@@ -18,11 +18,13 @@ class MobileClient extends React.PureComponent {
     name: this.props.clientInfo.name,
     secondname: this.props.clientInfo.secondname,
     balance: this.props.clientInfo.balance,
-    active: this.props.clientInfo.balance < 0 ? false : true,
   };
 
   changeCientInfo = (obj) => {
-    console.log(obj);
+    if (this.state.id === obj.id) {
+      // console.log(this.state.id, obj);
+      this.setState( obj );
+    }
   };
 
   componentDidMount = () => {
@@ -35,8 +37,9 @@ class MobileClient extends React.PureComponent {
 
   render() {
 
-    console.log("MobileClient id="+this.props.id+" render");
-    
+    console.log("MobileClient id="+this.props.clientInfo.id+" render");
+    // console.log(this.props.clientInfo.id);
+
     return (
         <div className='mobile-client mobile-client__row'>
             <div className='mobile-client__lastname'>{this.state.lastname}</div>
@@ -44,7 +47,7 @@ class MobileClient extends React.PureComponent {
             <div className='mobile-client__secondname'>{this.state.secondname}</div>
             <div className='mobile-client__balance'>{this.state.balance}</div>
             
-            <div className='mobile-client__active' style={this.state.active ? {backgroundColor: "green"} : {backgroundColor: "red"}}>{this.state.active ? "active" : "blocked"}</div>
+            <div className='mobile-client__active' style={this.state.balance > 0 ? {backgroundColor: "green"} : {backgroundColor: "red"}}>{this.state.balance > 0 ? "active" : "blocked"}</div>
             
             <input type="button" value="Edit" onClick={()=>this.props.cbActivateEditMode({...this.state, newClient: false})} />
         </div>
