@@ -15,6 +15,7 @@ class EditMode extends React.PureComponent {
     newClient: PropTypes.bool,
     clientsID: PropTypes.array,
     cbDeactivateEditMode: PropTypes.func,
+    cbRemoveClient: PropTypes.func,
   };
 
   state = {
@@ -51,17 +52,9 @@ class EditMode extends React.PureComponent {
     let newState = {id: this.state.id};
     
     if (!this.state.id) {
+      let newID=this.state.clientsID.sort( (a,b) => b-a )[0] + 1;
 
-      for (let i = 1; i <= this.state.clientsID.length; i++) {
-        // console.log(i, this.state.clientsID,this.state.clientsID.includes(i))
-        if (this.state.clientsID.includes(i)) {
-          continue;
-        } else {
-          newState.id = i;
-          break;
-        }
-      }
-
+      newState.id = newID;
       newState.lastname = this.newLastnameRef.value;
       newState.name = this.newNameRef.value;
       newState.secondname = this.newSecondnameRef.value;
@@ -122,6 +115,7 @@ class EditMode extends React.PureComponent {
             </div>
 
             <input type="button" value="Save" onClick = {this.setNewState} />
+            <input type="button" value="Del" onClick = {()=>this.props.cbRemoveClient(this.state.id)} />
             <input type="button" value="Cancel" onClick = {()=>this.props.cbDeactivateEditMode()} />
         </div>
     );

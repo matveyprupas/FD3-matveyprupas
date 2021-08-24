@@ -24,9 +24,9 @@ class MobileCompany extends React.PureComponent {
   state = {
     name: this.props.name,
     allClients: this.props.clients,
-    showedClients: this.props.clients,
     clientsID: this.props.clients.map( el => el.id),
     editMode: false,
+    showMode: "all",
     editedClient: null,
   };
 
@@ -43,19 +43,15 @@ class MobileCompany extends React.PureComponent {
   };
 
   showAllClients = () => {
-    this.setState( {showedClients: this.state.allClients} );
+    this.setState( {showMode: "all"} );
   };
 
   showActiveClients = () => {
-    let sortedClients = [...this.state.allClients].filter( el => el.balance > 0 );
-    console.log(sortedClients);
-    this.setState( {showedClients: sortedClients} );
+    this.setState( {showMode: "active"} );
   };
 
   showDeactiveClients = () => {
-    let sortedClients = [...this.state.allClients].filter( el => el.balance <= 0 );
-    console.log(sortedClients);
-    this.setState( {showedClients: sortedClients} );
+    this.setState( {showMode: "deactive"} );
   };
 
   activateEditMode = (obj) => {
@@ -68,8 +64,18 @@ class MobileCompany extends React.PureComponent {
 
   addNewClient = (obj) => {
     if (!this.state.clientsID.includes(obj.id)) {
-      this.setState( {showedClients: [...this.state.showedClients, obj], clientsID: [...this.state.clientsID, obj.id]} );
+      this.setState( {allClients: [...this.state.allClients, obj], clientsID: [...this.state.clientsID, obj.id]} );
     }
+  };
+
+  removeClient = (id) => {
+    console.log(this.state);
+    if (this.state.clientsID.includes(id)) {
+      let sortedClients = this.state.allClients.filter( el => el.id !== id);
+      let sortedClientsID = this.state.clientsID.filter( el => el !== id);
+      this.setState( {allClients: sortedClients, clientsID: sortedClientsID}, ()=> console.log(this.state) );
+    }
+    this.deactivateEditMode();
   };
 
   componentDidMount = () => {
@@ -84,9 +90,22 @@ class MobileCompany extends React.PureComponent {
 
     console.log("MobileCompany render");
 
-    var clientsCode=this.state.showedClients.map( c =>
-      <MobileClient key={c.id} clientInfo={c} cbActivateEditMode = {this.activateEditMode} />
-    );
+    var clientsCode = [];
+
+    if (this.state.showMode === "all") {
+      clientsCode=this.state.allClients.map( c =>
+        <MobileClient key={c.id} clientInfo={c} cbActivateEditMode = {this.activateEditMode} />
+      );
+    } else if (this.state.showMode === "active") {
+      clientsCode=this.state.allClients.filter(el => el.balance > 0).map( c =>
+        <MobileClient key={c.id} clientInfo={c} cbActivateEditMode = {this.activateEditMode} />
+      );
+    } else if (this.state.showMode === "deactive") {
+      clientsCode=this.state.allClients.filter(el => el.balance <= 0).map( c =>
+        <MobileClient key={c.id} clientInfo={c} cbActivateEditMode = {this.activateEditMode} />
+      );
+    }
+
 
     return (
       <div className='mobile-company'>
@@ -116,7 +135,7 @@ class MobileCompany extends React.PureComponent {
         <input type="button" value="Add client" onClick= {()=>this.activateEditMode({newClient: true})}/>
         {
           this.state.editMode &&
-          <EditMode  key={this.state.editedClient.id} id={this.state.editedClient.id} lastname={this.state.editedClient.lastname} name={this.state.editedClient.name} secondname={this.state.editedClient.secondname} balance={this.state.editedClient.balance} newClient={this.state.editedClient.newClient} clientsID={this.state.clientsID} cbDeactivateEditMode = {this.deactivateEditMode} />
+          <EditMode  key={this.state.editedClient.id} id={this.state.editedClient.id} lastname={this.state.editedClient.lastname} name={this.state.editedClient.name} secondname={this.state.editedClient.secondname} balance={this.state.editedClient.balance} newClient={this.state.editedClient.newClient} clientsID={this.state.clientsID} cbDeactivateEditMode = {this.deactivateEditMode} cbRemoveClient = {this.removeClient} />
         }
       </div>
     );
