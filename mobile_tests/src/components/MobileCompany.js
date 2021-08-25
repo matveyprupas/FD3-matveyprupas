@@ -57,11 +57,10 @@ class MobileCompany extends React.PureComponent {
   };
 
   removeClient = (id) => {
-    console.log(this.state);
     if (this.state.clientsID.includes(id)) {
       let sortedClients = this.state.allClients.filter( el => el.id !== id);
       let sortedClientsID = this.state.clientsID.filter( el => el !== id);
-      this.setState( {allClients: sortedClients, clientsID: sortedClientsID}, ()=> console.log(this.state) );
+      this.setState( {allClients: sortedClients, clientsID: sortedClientsID} );
     }
     this.deactivateEditMode();
   };

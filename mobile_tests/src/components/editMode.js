@@ -80,7 +80,6 @@ class EditMode extends React.PureComponent {
       this.setState( newState );
     }
 
-    // console.log(newState);
     mobileEvents.emit('editedClientInfo', newState);
     this.props.cbDeactivateEditMode();
   };

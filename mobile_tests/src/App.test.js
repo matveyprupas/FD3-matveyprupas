@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 import MobileCompany from './components/MobileCompany';
-import EditMode from './components/editMode';
-// import React from 'react';
 import ReactDOM from 'react-dom'
 import renderer from 'react-test-renderer';
 import clientsHash from './clientsHash.json';
@@ -12,7 +10,7 @@ it('renders without crashing', () => {
   ReactDOM.render(<App />, div);
 });
 
-test('работа MobileCompany', () => {
+test('sort of MobileCompany', () => {
   const component = renderer.create(
     <MobileCompany name={clientsHash.companyName} clients={clientsHash.clientsArr} />
   );
@@ -37,24 +35,54 @@ test('работа MobileCompany', () => {
   expect(componentTree).toMatchSnapshot();
 });
 
-test('работа EditMode', () => {
 
+
+test('open and close EditMode', () => {
   const component = renderer.create(
-    <EditMode name={clientsHash.clientsArr[0].name} id={clientsHash.clientsArr[0].id} lastname={clientsHash.clientsArr[0].lastname} secondname={clientsHash.clientsArr[0].secondname} balance={clientsHash.clientsArr[0].balance} />
+    <MobileCompany name={clientsHash.companyName} clients={clientsHash.clientsArr} />
   );
 
   let componentTree=component.toJSON();
   expect(componentTree).toMatchSnapshot();
 
-  const allBtn = component.root.find( el => el.props.value === 'Save' ); 
-    // console.log("allBtn: ", allBtn);
+  const addBtn = component.root.find( el => el.props.value === 'Add client' ); 
+  const editBtns = component.root.findAll( el => el.props.value === 'Edit' ); 
 
+  
+  addBtn.props.onClick();
+  componentTree=component.toJSON();
+  expect(componentTree).toMatchSnapshot();
+
+  editBtns.forEach( el => {
+    el.props.onClick();
+    componentTree=component.toJSON();
+    expect(componentTree).toMatchSnapshot();
+  } );
+
+  const closeEditModeBtn = component.root.find( el => el.props.value === 'Cancel' ); 
+
+  closeEditModeBtn.props.onClick();
+  componentTree=component.toJSON();
+  expect(componentTree).toMatchSnapshot();
 });
 
 
+test('remove MobileClients', () => {
+  const component = renderer.create(
+    <MobileCompany name={clientsHash.companyName} clients={clientsHash.clientsArr} />
+  );
 
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
+  let componentTree=component.toJSON();
+  expect(componentTree).toMatchSnapshot();
+
+  const editBtns = component.root.findAll( el => el.props.value === 'Edit' ); 
+
+  editBtns.forEach( el => {
+    el.props.onClick();
+    const detBtn = component.root.find( el => el.props.value === 'Del' ); 
+    
+    detBtn.props.onClick();
+    componentTree=component.toJSON();
+    expect(componentTree).toMatchSnapshot();
+  } );
+});
