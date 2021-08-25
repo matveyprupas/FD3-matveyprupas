@@ -80,7 +80,6 @@ class EditMode extends React.PureComponent {
       this.setState( newState );
     }
 
-    // console.log(newState);
     mobileEvents.emit('editedClientInfo', newState);
     this.props.cbDeactivateEditMode();
   };
@@ -114,7 +113,7 @@ class EditMode extends React.PureComponent {
                 <input type="text" id='edit-form__balance' defaultValue={this.props.balance ? this.props.balance : 0} ref={this.setNewBalanceRef} />
             </div>
 
-            <input type="button" value="Save" onClick = {this.setNewState} />
+            <input type="button" value="Save" id="save-btn" onClick = {this.setNewState} />
             <input type="button" value="Del" onClick = {()=>this.props.cbRemoveClient(this.state.id)} />
             <input type="button" value="Cancel" onClick = {()=>this.props.cbDeactivateEditMode()} />
         </div>
