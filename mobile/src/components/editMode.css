@@ -1,0 +1,10 @@
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.edit-form__row {
+  display: flex;
+  justify-content: space-between;
+}
