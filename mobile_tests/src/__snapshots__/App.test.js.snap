@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`работа MobileCompany 1`] = `
+<div
+  className="mobile-company"
+>
+  <h1
+    className="mobile-company__name"
+  >
+    Компания «
+    Velcom
+    »
+  </h1>
+  <hr />
+  <input
+    className="all-btn"
+    onClick={[Function]}
+    type="button"
+    value="All"
+  />
+  <input
+    onClick={[Function]}
+    type="button"
+    value="Active"
+  />
+  <input
+    onClick={[Function]}
+    type="button"
+    value="Deactive"
+  />
+  <hr />
+  <div
+    className="mobile-company__client"
+  >
+    <div
+      className="mobile-client__row"
+    >
+      <div
+        className="mobile-client__lastname"
+      >
+        Фамилия
+      </div>
+      <div
+        className="mobile-client__name"
+      >
+        Имя
+      </div>
+      <div
+        className="mobile-client__fathername"
+      >
+        Отчество
+      </div>
+      <div
+        className="mobile-client__balance"
+      >
+        Баланс
+      </div>
+      <div
+        className="mobile-client__status"
+      >
+        Статус
+      </div>
+      <div
+        className="mobile-client__edit"
+      >
+        Редактировать
+      </div>
+    </div>
+    <div
+      className="mobile-client mobile-client__row"
+    >
+      <div
+        className="mobile-client__lastname"
+      >
+        Иванов
+      </div>
+      <div
+        className="mobile-client__name"
+      >
+        Иван
+      </div>
+      <div
+        className="mobile-client__secondname"
+      >
+        Иванович
+      </div>
+      <div
+        className="mobile-client__balance"
+      >
+        200
+      </div>
+      <div
+        className="mobile-client__active"
+        style={
+          Object {
+            "backgroundColor": "green",
+          }
+        }
+      >
+        active
+      </div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Edit"
+      />
+    </div>
+    <div
+      className="mobile-client mobile-client__row"
+    >
+      <div
+        className="mobile-client__lastname"
+      >
+        Сидоров
+      </div>
+      <div
+        className="mobile-client__name"
+      >
+        Сидор
+      </div>
+      <div
+        className="mobile-client__secondname"
+      >
+        Сидорович
+      </div>
+      <div
+        className="mobile-client__balance"
+      >
+        2700
+      </div>
+      <div
+        className="mobile-client__active"
+        style={
+          Object {
+            "backgroundColor": "green",
+          }
+        }
+      >
+        active
+      </div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Edit"
+      />
+    </div>
+    <div
+      className="mobile-client mobile-client__row"
+    >
+      <div
+        className="mobile-client__lastname"
+      >
+        Петров
+      </div>
+      <div
+        className="mobile-client__name"
+      >
+        Петр
+      </div>
+      <div
+        className="mobile-client__secondname"
+      >
+        Петрович
+      </div>
+      <div
+        className="mobile-client__balance"
+      >
+        -2200
+      </div>
+      <div
+        className="mobile-client__active"
+        style={
+          Object {
+            "backgroundColor": "red",
+          }
+        }
+      >
+        blocked
+      </div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Edit"
+      />
+    </div>
+    <div
+      className="mobile-client mobile-client__row"
+    >
+      <div
+        className="mobile-client__lastname"
+      >
+        Прупас
+      </div>
+      <div
+        className="mobile-client__name"
+      >
+        Матвей
+      </div>
+      <div
+        className="mobile-client__secondname"
+      >
+        Викторович
+      </div>
+      <div
+        className="mobile-client__balance"
+      >
+        100500
+      </div>
+      <div
+        className="mobile-client__active"
+        style={
+          Object {
+            "backgroundColor": "green",
+          }
+        }
+      >
+        active
+      </div>
+      <input
+        onClick={[Function]}
+        type="button"
+        value="Edit"
+      />
+    </div>
+  </div>
+  <input
+    onClick={[Function]}
+    type="button"
+    value="Add client"
+  />
+</div>
+`;
