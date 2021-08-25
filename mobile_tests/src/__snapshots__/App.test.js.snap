@@ -13,6 +13,7 @@ exports[`работа MobileCompany 1`] = `
   </h1>
   <hr />
   <input
+    className="all-btn"
     onClick={[Function]}
     type="button"
     value="All"

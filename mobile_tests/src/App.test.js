@@ -12,6 +12,9 @@ it('renders without crashing', () => {
 
 test('работа MobileCompany', () => {
 
+  // const componentTree = shallow(
+  //   <MobileCompany name={clientsHash.companyName} clients={clientsHash.clientsArr} />
+  // );
   // создаём тестовую версию компонента
   const component = renderer.create(
     <MobileCompany name={clientsHash.companyName} clients={clientsHash.clientsArr} />
@@ -23,22 +26,22 @@ test('работа MobileCompany', () => {
 
   // найдём в вёрстке компонента саму кнопку
   // console.log(component.root);
-  const buttonElem = component.root.find( el => el.type === 'button' && el.props.value === 'All' ); 
+  const allBtn = component.root.find( el => el.className === 'all-btn' ); 
   // и "нажмём" на неё
-  buttonElem.props.onClick();
+  // allBtn.props.onClick();
   // component.root.find('button').simulate('click');
 
 
   // получаем уже изменённый снэпшот
-  componentTree=component.toJSON();
-  expect(componentTree).toMatchSnapshot();
+  // componentTree=component.toJSON();
+  // expect(componentTree).toMatchSnapshot();
 
   // "нажмём" кнопку ещё раз
-  buttonElem.props.onClick();
+  // buttonElem.props.onClick();
   
   // и получаем окончательный снэпшот
-  componentTree=component.toJSON();
-  expect(componentTree).toMatchSnapshot();
+  // componentTree=component.toJSON();
+  // expect(componentTree).toMatchSnapshot();
   
   /*
   // можно эмулировать события, передавая в качестве объекта события то что нам нужно:

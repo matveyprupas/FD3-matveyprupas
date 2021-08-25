@@ -100,7 +100,7 @@ class MobileCompany extends React.PureComponent {
         <h1 className='mobile-company__name'>Компания &laquo;{this.state.name}&raquo;</h1>
         <hr />
 
-        <input type="button" value="All" onClick={this.showAllClients} />
+        <input type="button" value="All" className="all-btn" onClick={this.showAllClients} />
         <input type="button" value="Active" onClick={this.showActiveClients} />
         <input type="button" value="Deactive" onClick={this.showDeactiveClients} />
         <hr />
